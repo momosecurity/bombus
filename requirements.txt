@@ -1,0 +1,30 @@
+############
+# DATABASE #
+############
+redis==3.5.3
+hiredis==1.1.0
+pymongo==3.8.0
+pymysql==0.10.1
+mongoengine==0.20.0
+
+
+#########
+# UTILS #
+#########
+python-dateutil==2.6.1
+gevent==1.4.0
+cerberus==1.3.2
+concurrent-log-handler==0.9.17
+arrow==0.15.4
+
+
+##########
+# DJANGO #
+##########
+django<3,>2.2
+django-environ==0.4.5
+django-filter==2.3.0
+django-redis==4.12.1
+django-braces==1.14.0
+djangorestframework==3.11.1
+django-rest-framework-mongoengine==3.4.1

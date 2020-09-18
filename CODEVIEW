@@ -1,0 +1,44 @@
+# 代码目录简介
+
+# 主要功能位于www/audit目录下
+
+├── assets   # 项目说明的引用文件, 无需关注
+│   └── img
+├── deploy   # 项目部署相关, 定时任务及nginx入口demo
+│   ├── crontab
+│   │── docker             # docker启动
+│   └── nginx
+├── front    # 前端
+│   ├── src
+│   │   ├── config         # 配置
+│   │   ├── images         # 资源图片
+│   │   ├── libs           # 自定义js
+│   │   ├── styles
+│   │   ├── template
+│   │   └── views      # 业务页面
+│   │       ├── audit      # 资产清单
+│   │       ├── error-pages
+│   │       ├── knowledge  # 知识库页面
+│   │       ├── login      # 登录页面
+│   │       ├── logs       # 审计日志
+│   │       ├── main       # 页头页脚
+│   │       ├── rule       # 策略配置
+│   │       ├── task       # 任务页面
+│   │       ├── user       # 用户管理
+│   │       └── workbench  # 工作台
+│   └── static
+└── www    # 后端
+    ├── audit              # 审计app: 主功能入口。数据采集、风险检测及报告产出逻辑。
+    │   ├── handlers
+    │   └── management
+    │       └── commands   # 数据采集逻辑入口
+    ├── core               # 连接池及util
+    │   ├── drfmongo           # 自定义扩展mongoengine
+    │   └── util
+    ├── knowledge          # 知识库app
+    ├── settings           # 项目配置
+    ├── bombus                # django project, 项目级逻辑
+    │   ├── libs                # 项目级底层基类及异常定义等
+    │   └── services            # 服务调用
+    ├── ssologin           # 登录验证app
+    └── static             # 文件上传下载app
