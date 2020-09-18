@@ -1,0 +1,49 @@
+##################
+##  脚本功能介绍  ##
+##################
+
+# 定时生成审计任务
+python manage.py crontab_task_gen
+
+# 缓存预热
+python manage.py crontab_cache_preheat
+
+#################
+##   数据拉取   ##
+#################
+# 资产清单同步
+python manage.py record_service_host_info
+
+# 服务器root用户同步
+python manage.py record_server_root_users
+
+# 数据库用户角色同步
+python manage.py crontab_db_user_sync
+
+# mysql日志同步
+python manage.py crontab_mysql_log_sync
+
+# 操作日志同步
+python manage.py crontab_os_command_sync
+
+# 部署单数据同步
+python manage.py crontab_ship_log_sync
+
+# 工单审批关闭同步
+python manage.py crontab_ticket_approve
+
+# 上线单同步
+python manage.py crontab_ticket_sync
+
+
+#################
+##   数据验证   ##
+#################
+# 角色权限验证
+python manage.py crontab_permission_verify
+
+# 权限兼容矩阵检测提醒
+python manage.py crontab_risk_user_reminder
+
+# 工单风险验证
+python manage.py crontab_deploy_ticket_verify

@@ -1,0 +1,8 @@
+FROM python:3.8.5
+
+WORKDIR /usr/src/app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+COPY www .
+RUN rm -rf logs && mkdir logs
+CMD [ "bash", "entry.sh"]

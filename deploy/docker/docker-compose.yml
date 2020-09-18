@@ -1,0 +1,48 @@
+version: '3.3'
+
+services:
+  app_python:
+    container_name: bombus_python
+    build:
+      context: ../../
+      dockerfile: deploy/docker/Dockerfile.python
+    depends_on:
+      - db_redis
+      - db_mongo
+    ports:
+      - "30010"
+    environment:
+      - DJANGO_SETTINGS_MODULE=settings.docker
+
+  app_node:
+    container_name: bombus_node
+    build:
+      context: ../../
+      dockerfile: deploy/docker/Dockerfile.node
+    ports:
+      - "40010"
+    environment:
+      - BOMBUS_FRONT_ENV=docker
+
+  app_nginx:
+    container_name: bombus_nginx
+    build:
+      context: ../../
+      dockerfile: deploy/docker/Dockerfile.nginx
+    ports:
+      - "60010:60010"
+    depends_on:
+      - app_python
+      - app_node
+
+  db_redis:
+    image: redis:6.0.8
+    container_name: bombus_redis
+    ports:
+      - "6379"
+
+  db_mongo:
+    image: mongo:4.4.1
+    container_name: bombus_mongo
+    ports:
+      - "27017"

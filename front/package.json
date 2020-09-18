@@ -1,0 +1,62 @@
+{
+  "name": "view-ui-project",
+  "version": "4.0.0",
+  "description": "A base project with Vue.js2、Vue-Router、webpack2 and with View UI 4.",
+  "main": "index.js",
+  "scripts": {
+    "init": "webpack --progress --config webpack.dev.config.js",
+    "dev": "webpack-dev-server --content-base ./ --open --inline --hot --compress --history-api-fallback --config webpack.dev.config.js",
+    "local": "webpack-dev-server --content-base ./ --open --inline --hot --compress --history-api-fallback --config webpack.local.config.js",
+    "build": "webpack --progress --hide-modules --config webpack.prod.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/view-design/view-ui-project.git"
+  },
+  "author": "Aresn",
+  "license": "MIT",
+  "dependencies": {
+    "@tinymce/tinymce-vue": "^3.2.2",
+    "axios": "^0.19.0",
+    "tinymce": "^5.3.2",
+    "view-design": "^4.0.1",
+    "vue": "^2.5.16",
+    "vue-clipboard2": "^0.3.1",
+    "vue-json-viewer": "^2.2.8",
+    "vue-router": "^2.8.1",
+    "vuex": "^3.1.1"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^2.0.0",
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.12.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.11.6",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^2.0.0",
+    "file-loader": "^0.8.5",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^2.28.0",
+    "iview-loader": "^1.2.1",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "vue-hot-reload-api": "^1.3.3",
+    "vue-html-loader": "^1.2.3",
+    "vue-loader": "^11.0.0",
+    "vue-style-loader": "^1.0.0",
+    "vue-template-compiler": "^2.2.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.11.5",
+    "webpack-merge": "^3.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/iview/iview-project/issues"
+  },
+  "homepage": "https://www.iviewui.com"
+}

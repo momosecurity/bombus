@@ -1,0 +1,6 @@
+FROM openresty/openresty:1.17.8.2-4-centos
+
+WORKDIR /usr/src/app
+COPY deploy/docker/nginx.conf .
+
+CMD ["openresty", "-c", "/usr/src/app/nginx.conf", "-g", "daemon off;"]
