@@ -184,5 +184,3 @@ chmod +x run.sh
 
 微信公众号:<br>
 <img src="https://momo-mmsrc.oss-cn-hangzhou.aliyuncs.com/img-1c96a083-7392-3b72-8aec-bad201a6abab.jpeg" width="200" hegiht="200" align=center /><br>
-
-简历投递: sec.job#immomo.com (#替换为@)
