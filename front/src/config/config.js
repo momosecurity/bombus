@@ -23,16 +23,10 @@ let config = {
     env: Env
 };
 
-let baseUrl = null
+// access domain
+let domain = '127.0.0.1'
 
-if (Env == 'production') {
-    baseUrl = 'http://127.0.0.1:60010'
-} else if (Env == 'development') {
-    baseUrl = 'http://127.0.0.1:60010'
-} else {
-    baseUrl = 'http://127.0.0.1:60010'
-}
-
+let baseUrl = `http://${domain}:60010`
 config['baseUrl'] = baseUrl
 
 export default config;
