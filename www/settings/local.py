@@ -48,7 +48,9 @@ CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
 
 # access domain
-HTTPS_HOST = 'http://127.0.0.1:60010/'
+DOMAIN = '127.0.0.1'
+HTTPS_HOST = f'http://{DOMAIN}:60010/'
+LOGIN_PAGE = f'{HTTPS_HOST}login'
 
 
 ##################
@@ -77,9 +79,3 @@ REDIS_CONF = {
     'ums_cache_ca': {'host': '127.0.0.1', 'port': 6379},
     'task_has_log': {'host': '127.0.0.1', 'port': 6379},
 }
-
-
-#############
-# SSO LOGIN #
-#############
-LOGIN_PAGE = f'{HTTPS_HOST}login'

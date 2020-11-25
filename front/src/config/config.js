@@ -24,9 +24,9 @@ let config = {
 };
 
 // access domain
-let host = '127.0.0.1'
+let domain = '127.0.0.1'
 
-let baseUrl = `http://${host}:60010`
+let baseUrl = `http://${domain}:60010`
 config['baseUrl'] = baseUrl
 
 export default config;

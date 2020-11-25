@@ -167,7 +167,7 @@ mongo + redis + nginx  + python3.6 + iViewUI(node v13.5.0)
     注1: 服务端口60010, 确保端口未占用; 
     注2: 默认通过127.0.0.1访问, 如需通过域名或其他IP访问, 请先行修改访问入口配置
         (可通过全局搜索`access domain`查找)
-        `HTTPS_HOST`   www/settings/docker.py     (后端)
+        `DOMAIN`       www/settings/docker.py     (后端)
         `domain`       front/src/config/config.js (前端)
 
 ```
