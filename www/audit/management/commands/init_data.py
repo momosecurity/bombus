@@ -251,6 +251,7 @@ class Command(BaseCommand):
         audit_sys = AuditSysModel.objects.first()
         rule_group = RuleGroupModel.objects.first()
         TaskManagerModel.objects.delete()
+        AuditTaskModel.objects.delete()
         TaskManagerModel(
             last_update=self.now,
             last_update_person=self.last_update_person,
@@ -380,6 +381,7 @@ class Command(BaseCommand):
         ).save()
 
     def init_app_compliance(self):
+        AppComplianceModel.objects.delete()
         AppComplianceModel(
             name='app名称',
             app_status='已投放',
@@ -391,6 +393,7 @@ class Command(BaseCommand):
         ).save()
 
     def init_feature_data(self):
+        FeatureModel.objects.delete()
         FeatureModel(
             title='待办项1',
             desc="为满足**目标, 需对**进行整改",
