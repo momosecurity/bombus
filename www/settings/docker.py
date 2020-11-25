@@ -19,6 +19,7 @@
 
 from settings.local import *
 
+# access domain
 HTTPS_HOST = 'http://127.0.0.1:60010/'
 
 

@@ -163,14 +163,20 @@ mongo + redis + nginx  + python3.6 + iViewUI(node v13.5.0)
 
 快速体验: 
 
-`注: 服务端口60010, 确保端口未占用`
+>
+    注1: 服务端口60010, 确保端口未占用; 
+    注2: 默认通过127.0.0.1访问, 如需通过域名或其他IP访问, 请先行修改访问入口配置
+        (可通过全局搜索`access domain`查找)
+        `HTTPS_HOST`   www/settings/docker.py     (后端)
+        `domain`       front/src/config/config.js (前端)
+
 ```
 # 1. 使用docker方式部署, 确保本机docker环境; 2. 切换至项目目录下
 chmod +x run.sh
 ./run.sh
 
 # 体验入口
-访问入口: http://127.0.0.1:60010/
+访问入口: http://${domain}:60010/     # 默认 http://127.0.0.1:60010/
 管理员: (user:admin; password:admin)
 审阅人: (user:auditor; password:auditor)
 ```

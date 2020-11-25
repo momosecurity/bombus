@@ -46,6 +46,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
+
+# access domain
 HTTPS_HOST = 'http://127.0.0.1:60010/'
 
 
