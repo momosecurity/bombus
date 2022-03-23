@@ -29,6 +29,10 @@ router.register(r'record-history', views.OperationLogViewSet)
 router.register(r'settings', views.SettingConfViewSet)
 router.register(r'app-compliance', views.AppComplianceViewSet)
 router.register(r'compliance-detail', views.ComplianceDetailViewSet)
+router.register(r'app-standing-book', views.AppStandingBookViewSet)
+router.register(r'app-todo', views.AppTodoViewSet)
+router.register(r'project-standing-book', views.ProjectStandingBookViewSet)
+router.register(r'project-todo', views.ProjectTodoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

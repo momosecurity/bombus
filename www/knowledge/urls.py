@@ -28,6 +28,8 @@ router.register(r'tag-type', viewsets.TagTypeViewSet)
 router.register(r'tag-type-property', viewsets.TagTypePropertyViewSet)
 router.register(r'tag', viewsets.TagViewSet)
 router.register(r'require', viewsets.RequireViewSet)
+router.register(r'policy-trace', viewsets.PolicyTraceViewSet)
+router.register(r'supervision', viewsets.SupervisionViewSet)
 
 
 urlpatterns = [

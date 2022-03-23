@@ -34,11 +34,12 @@ from audit.models import (AuditServerModel, AuditSysModel, AuditTaskModel,
                           TicketApproveModel, UserRoleDataModel)
 from bombus.libs.enums import (AuditPeriodEnum, OnOfflineStatusEnum,
                                RuleTypeEnum, ServerKindEnum)
-from bombus.models import AppComplianceModel, FeatureModel
+from bombus.models import AppComplianceModel, FeatureModel, AppStandingBookModel, AppTodoModel, \
+    ProjectStandingBookModel, ProjectTodoModel
 from bombus.services.user_model import Employee
 from core.util import time_util
 from knowledge.models import (RequireModel, TagModel, TagTypeModel,
-                              TagTypePropertyModel)
+                              TagTypePropertyModel, PolicyTraceModel, SupervisionModel)
 from ssologin.models import PermissionKeyModel
 
 
@@ -485,6 +486,68 @@ class Command(BaseCommand):
         SysProjectModel(**sys_project_data).save()
         TicketApproveModel(**ticket_approve_data).save()
 
+    def init_standing_book_data(self):
+        """ 管理台账数据 """
+        AppStandingBookModel.objects.delete()
+        AppTodoModel.objects.delete()
+        ProjectStandingBookModel.objects.delete()
+        ProjectTodoModel.objects.delete()
+        app_standing_book_data = {
+            'app': '产品',
+            'app_version': '1.0.0',
+            'occur_time': datetime.datetime.now(),
+            'kind': '类型1',
+            'remark': '备注'
+        }
+        app_obj = AppStandingBookModel(**app_standing_book_data).save()
+        app_todo_data = {
+            'app': app_obj,
+            'question': '问题描述',
+            'handle_status': '处理状态: 待办',
+            'handle_person': '处理人',
+            'schedule': '整改排期计划'
+        }
+        AppTodoModel(**app_todo_data).save()
+
+        project_standing_book_data = {
+            'project': '项目1',
+            'handle_person': '处理人2',
+            'remark': '备注'
+        }
+        pro_obj = ProjectStandingBookModel(**project_standing_book_data).save()
+        project_todo_data = {
+            'project': pro_obj,
+            'detail': '具体事项',
+            'time_point': '时间线排期'
+        }
+        ProjectTodoModel(**project_todo_data).save()
+
+    def init_policy_trace_data(self):
+        """ 政策解读数据 """
+        PolicyTraceModel.objects.delete()
+        data = {
+            'title': '政策法规',
+            'title_url': '',
+            'pub_time': self.now,
+            'organ': '发文机构',
+            'kind': '类型',
+            'interpretation': '政策解读1231',
+            'inter_url': ''
+        }
+        PolicyTraceModel(**data).save()
+
+    def init_supervision_data(self):
+        """ 监管动态数据 """
+        SupervisionModel.objects.delete()
+        data = {
+            'title': 'this is title',
+            'pub_time': self.now,
+            'organ': '机构1',
+            'kind': '类型',
+            'concern': '关注重点123',
+            'source_link': ''
+        }
+        SupervisionModel(**data).save()
 
     def handle(self, *args, **options):
         self.now = datetime.datetime.now()
@@ -503,3 +566,7 @@ class Command(BaseCommand):
         self.init_knowledge_data()
         self.init_feature_data()
         self.init_ticket_data()
+        self.init_standing_book_data()
+        self.init_policy_trace_data()
+        self.init_supervision_data()
+

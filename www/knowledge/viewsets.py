@@ -32,7 +32,7 @@ from knowledge.models import (RequireModel, TagModel, TagTypeModel,
                               TagTypePropertyModel)
 from knowledge.serializers import (RequireSerializer, TagSerializer,
                                    TagTypePropertySerializer,
-                                   TagTypeSerializer)
+                                   TagTypeSerializer, PolicyTraceSerializer, SupervisionSerializer)
 
 
 class HistoryVersionViewSet(UpdateViewSet):
@@ -236,3 +236,46 @@ class RequireViewSet(GetViewSet, HistoryVersionViewSet):
         tag_desc = TagModel.type_count()
         result.extend(tag_desc)
         return result
+
+
+@permission_required(settings.CA_UNIFY)
+class PolicyTraceViewSet(GetViewSet, UpdateViewSet):
+    serializer_class = PolicyTraceSerializer
+    queryset = serializer_class.Meta.model.objects()
+    form_rule_keys = ['title', 'interpretation']
+    filter_fields = {
+        'id': '',
+        'title': 'icontains',
+        'organ': 'icontains',
+        'kind': 'icontains',
+        'pub_time': 'time_range:%Y-%m-%d'
+    }
+
+    def get_queryset(self):
+        query = self.build_filter_params(self.request.query_params)
+        if 'id' in query:
+            if len(query['id']) != 24:
+                query.pop('id', None)
+
+        return self.serializer_class.Meta.model.objects(**query).order_by('-id')
+
+
+@permission_required(settings.CA_UNIFY)
+class SupervisionViewSet(GetViewSet, UpdateViewSet):
+    serializer_class = SupervisionSerializer
+    queryset = serializer_class.Meta.model.objects()
+    form_rule_keys = ['title', 'concern']
+    filter_fields = {
+        'id': '',
+        'organ': 'icontains',
+        'kind': 'icontains',
+        'pub_time': 'time_range:%Y-%m-%d'
+    }
+
+    def get_queryset(self):
+        query = self.build_filter_params(self.request.query_params)
+        if 'id' in query:
+            if len(query['id']) != 24:
+                query.pop('id', None)
+
+        return self.serializer_class.Meta.model.objects(**query).order_by('-id')

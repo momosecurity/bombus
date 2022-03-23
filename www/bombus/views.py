@@ -37,7 +37,8 @@ from bombus.serializers import (AppComplianceSerializer,
                                 ComplianceDetailSerializer, FeatureSerializer,
                                 OperationLogSerializer,
                                 ProjectAuditLogEntrySerializer,
-                                SettingConfSerializer)
+                                SettingConfSerializer, ProjectTodoSerializer, ProjectStandingBookSerializer,
+                                AppTodoSerializer, AppStandingBookSerializer)
 from bombus.services.user_service import UserService
 
 logger = logging.getLogger(__name__)
@@ -259,3 +260,121 @@ class ComplianceDetailViewSet(BaseViewSet):
     def get_queryset(self):
         query = self.build_filter_params(self.request.query_params)
         return self.serializer_class.Meta.model.objects(**query).filter(deleted=False)
+
+
+@permission_required(settings.CA_BENCH)
+class AppStandingBookViewSet(BaseViewSet):
+    """
+    APP管理台账
+    """
+    serializer_class = AppStandingBookSerializer
+    filter_fields = {
+        'app': 'icontains',
+        'kind': 'icontains',
+        'occur_time': 'time_range:%Y-%m-%d'
+    }
+    form_rule_keys = ['app', 'app_version', 'occur_time']
+    show_column_keys = serializer_class.Meta.model._fields
+    exclude_column_keys = ['created_time', 'updated_time', 'deleted', 'id']
+
+    def _get_auto_data(self, request, *args, **kwargs):
+        """
+        填充自动变更的非表单数据, 如表单有对应字段, 以填充的为准
+        """
+        auto_data = {}
+        _fields = self.serializer_class.Meta.model._fields
+        if 'updated_time' in _fields:
+            auto_data['updated_time'] = datetime.datetime.now()
+        return auto_data
+
+    def get_queryset(self):
+        query = self.build_filter_params(self.request.query_params)
+        return self.serializer_class.Meta.model.objects(**query).filter(deleted=False).order_by('-id')
+
+
+@permission_required(settings.CA_BENCH)
+class AppTodoViewSet(BaseViewSet):
+    """
+    APP台账待办详情
+    """
+    serializer_class = AppTodoSerializer
+    filter_fields = {
+        'handle_status': 'icontains',
+        'app': ''
+    }
+    form_rule_keys = ['question']
+    show_column_keys = serializer_class.Meta.model._fields
+    exclude_column_keys = ['app', 'created_time', 'updated_time', 'deleted', 'id']
+
+    def _get_auto_data(self, request, *args, **kwargs):
+        """
+        填充自动变更的非表单数据, 如表单有对应字段, 以填充的为准
+        """
+        auto_data = {}
+        _fields = self.serializer_class.Meta.model._fields
+        if 'updated_time' in _fields:
+            auto_data['updated_time'] = datetime.datetime.now()
+        return auto_data
+
+    def get_queryset(self):
+        query = self.build_filter_params(self.request.query_params)
+        return self.serializer_class.Meta.model.objects(**query).filter(deleted=False).order_by('-id')
+
+
+@permission_required(settings.CA_BENCH)
+class ProjectStandingBookViewSet(BaseViewSet):
+    """
+    专项管理台账
+    """
+    serializer_class = ProjectStandingBookSerializer
+    filter_fields = {
+        'project': 'icontains',
+        'handle_person': 'icontains'
+    }
+    form_rule_keys = ['project', 'handle_person']
+    show_column_keys = serializer_class.Meta.model._fields
+    exclude_column_keys = ['created_time', 'updated_time', 'deleted', 'id']
+
+    def _get_auto_data(self, request, *args, **kwargs):
+        """
+        填充自动变更的非表单数据, 如表单有对应字段, 以填充的为准
+        """
+        auto_data = {}
+        _fields = self.serializer_class.Meta.model._fields
+        if 'updated_time' in _fields:
+            auto_data['updated_time'] = datetime.datetime.now()
+        return auto_data
+
+    def get_queryset(self):
+        query = self.build_filter_params(self.request.query_params)
+        return self.serializer_class.Meta.model.objects(**query).filter(deleted=False).order_by('-id')
+
+
+@permission_required(settings.CA_BENCH)
+class ProjectTodoViewSet(BaseViewSet):
+    """
+    专项台账待办详情
+    """
+    serializer_class = ProjectTodoSerializer
+    filter_fields = {
+        'detail': 'icontains',
+        'project': '',
+        'time_point': 'icontains'
+    }
+    form_rule_keys = ['detail']
+    show_column_keys = serializer_class.Meta.model._fields
+    exclude_column_keys = ['project', 'created_time', 'updated_time', 'deleted', 'id']
+
+    def _get_auto_data(self, request, *args, **kwargs):
+        """
+        填充自动变更的非表单数据, 如表单有对应字段, 以填充的为准
+        """
+        auto_data = {}
+        _fields = self.serializer_class.Meta.model._fields
+        if 'updated_time' in _fields:
+            auto_data['updated_time'] = datetime.datetime.now()
+        return auto_data
+
+    def get_queryset(self):
+        query = self.build_filter_params(self.request.query_params)
+        return self.serializer_class.Meta.model.objects(**query).filter(deleted=False).order_by('-id')

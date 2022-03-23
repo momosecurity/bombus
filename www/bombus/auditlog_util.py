@@ -35,9 +35,10 @@ from audit.models import (AuditServerModel, AuditSysModel, AuditTaskModel,
 from bombus.libs.enums import CEnum, ServerKindEnum
 from bombus.models import (AppComplianceModel, ComplianceDetailModel,
                            FeatureModel, OperationLogModel,
-                           ProjectAuditLogEntry, SettingConfModel)
+                           ProjectAuditLogEntry, SettingConfModel, AppStandingBookModel, AppTodoModel,
+                           ProjectStandingBookModel, ProjectTodoModel)
 from knowledge.models import (RequireModel, TagModel, TagTypeModel,
-                              TagTypePropertyModel)
+                              TagTypePropertyModel, SupervisionModel, PolicyTraceModel)
 
 AUDIT_PREFIX = 'audit'
 SSO_PREFIX = 'sso'
@@ -68,11 +69,17 @@ VIEW_MODEL_MAP = {
     '/app-compliance': AppComplianceModel,
     '/compliance-detail': ComplianceDetailModel,
     '/settings': SettingConfModel,
+    '/app-standing-book': AppStandingBookModel,
+    '/app-todo': AppTodoModel,
+    '/project-standing-book': ProjectStandingBookModel,
+    '/project-todo': ProjectTodoModel,
     # 知识库
     f'{KNOW_PREFIX}/tag-type': TagTypeModel,
     f'{KNOW_PREFIX}/tag-type-property': TagTypePropertyModel,
     f'{KNOW_PREFIX}/tag': TagModel,
     f'{KNOW_PREFIX}/require': RequireModel,
+    f'{KNOW_PREFIX}/supervision': SupervisionModel,
+    f'{KNOW_PREFIX}/policy-trace': PolicyTraceModel,
 }
 
 

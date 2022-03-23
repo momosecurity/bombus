@@ -147,7 +147,23 @@ const routers = [
                     icon: 'md-contact',
                 },
                 component: (resolve) => require(['./views/knowledge/overlook.vue'], resolve)
-            }
+            },
+            {
+                path: 'supervision',
+                name: 'supervision',
+                meta: {
+                    title: '监管动态',
+                },
+                component: (resolve) => require(['./views/knowledge/supervision.vue'], resolve)
+            },
+            {
+                path: 'policy-trace',
+                name: 'policy-trace',
+                meta: {
+                    title: '政策解读',
+                },
+                component: (resolve) => require(['./views/knowledge/policy-trace.vue'], resolve)
+            },
         ]
     },
     {
@@ -373,6 +389,44 @@ const routers = [
                     hideInMenu: true
                 },
                 component: (resolve) => require(['./views/workbench/compliance-detail.vue'], resolve)
+            },
+            {
+                path: 'standing-book',
+                name: 'standing-book',
+                meta: {
+                    title: 'APP管理台账',
+                    icon: 'md-contact'
+                },
+                component: (resolve) => require(['./views/workbench/app-standing-book.vue'], resolve)
+            },
+            {
+                path: 'app-todo/:id',
+                name: 'app-todo',
+                meta: {
+                    title: 'APP台账待办',
+                    icon: 'md-contact',
+                    hideInMenu: true
+                },
+                component: (resolve) => require(['./views/workbench/app-todo.vue'], resolve)
+            },
+            {
+                path: 'project-standing-book',
+                name: 'project-standing-book',
+                meta: {
+                    title: '专项管理台账',
+                    icon: 'md-contact'
+                },
+                component: (resolve) => require(['./views/workbench/project-standing-book.vue'], resolve)
+            },
+            {
+                path: 'project-todo/:id',
+                name: 'project-todo',
+                meta: {
+                    title: '专项台账待办',
+                    icon: 'md-contact',
+                    hideInMenu: true
+                },
+                component: (resolve) => require(['./views/workbench/project-todo.vue'], resolve)
             },
         ]
     },

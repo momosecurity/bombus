@@ -20,7 +20,7 @@
 import logging
 from collections import defaultdict
 
-from mongoengine import Document, ListField, ReferenceField, StringField
+from mongoengine import Document, ListField, ReferenceField, StringField, DateTimeField
 from bombus.libs.enums import BooleanEnum, OnOfflineStatusEnum, SelectTypeEnum
 
 logger = logging.getLogger(__name__)
@@ -244,3 +244,30 @@ class RequireModel(Document):
         queryset = cls.objects.filter(tags__not__in=offline_required_tags)
         result['total_count'] = queryset.count()
         return result
+
+
+class SupervisionModel(Document):
+    meta = {
+        'collection': 'supervision',
+        'verbose_name': '监管动态'
+    }
+    title = StringField(required=True, verbose_name='标题')
+    pub_time = DateTimeField(required=False, verbose_name='动态时间', null=True)
+    organ = StringField(required=False, verbose_name='机构', null=True)
+    kind = StringField(required=False, verbose_name='类型', null=True)
+    concern = StringField(required=True, verbose_name='关注重点')
+    source_link = StringField(verbose_name='原文链接', null=True, required=False)
+
+
+class PolicyTraceModel(Document):
+    meta = {
+        'collection': 'policy_trace',
+        'verbose_name': '政策解读'
+    }
+    title = StringField(required=True, verbose_name='政策法规')
+    title_url = StringField(required=False, verbose_name='法规链接', null=True)
+    pub_time = DateTimeField(required=False, verbose_name='发文时间', null=True)
+    organ = StringField(required=False, verbose_name='发文机构', null=True)
+    kind = StringField(required=False, verbose_name='类型', null=True)
+    interpretation = StringField(required=True, verbose_name='政策解读')
+    inter_url = StringField(required=False, verbose_name='解读链接', null=True)

@@ -253,3 +253,84 @@ class ComplianceDetailModel(BaseModel):
         if self.rectification_time:
             return time2str(self.rectification_time)
         return '-'
+
+
+class AppStandingBookModel(BaseModel):
+    meta = {
+        'collection': 'app_standing_book',
+        'verbose_name': 'app管理台账',
+        'indexes': [
+            'app'
+        ]
+    }
+    app = StringField(required=True, verbose_name='产品')
+    app_version = StringField(required=True, verbose_name='版本')
+    occur_time = DateTimeField(required=True, verbose_name='发生时间')
+    kind = StringField(required=False, verbose_name='类型', null=True)
+    remark = StringField(required=False, verbose_name='备注', null=True)
+
+    @classmethod
+    def get_name_by_id(cls, id):
+        try:
+            return cls.objects.get(id=id).app
+        except Exception:
+            return id
+
+
+class AppTodoModel(BaseModel):
+    meta = {
+        'collection': 'app_todo',
+        'verbose_name': 'app待办项',
+    }
+
+    app = ReferenceField(AppStandingBookModel, required=True, verbose_name='APP主体')
+    question = StringField(required=True, verbose_name='问题')
+    handle_status = StringField(required=False, verbose_name='整改状态', null=True)
+    handle_person = StringField(required=False, verbose_name='对接人', null=True)
+    schedule = StringField(required=False, verbose_name='整改排期', null=True)
+
+    @classmethod
+    def get_name_by_id(cls, id):
+        try:
+            return cls.objects.get(id=id).question[:10]
+        except Exception:
+            return id
+
+
+class ProjectStandingBookModel(BaseModel):
+    meta = {
+        'collection': 'project_standing_book',
+        'verbose_name': '专项管理台账',
+        'indexes': [
+            'project'
+        ]
+    }
+
+    project = StringField(required=True, verbose_name='项目')
+    handle_person = StringField(required=True, verbose_name='对接人')
+    remark = StringField(required=False, verbose_name='备注', null=True)
+
+    @classmethod
+    def get_name_by_id(cls, id):
+        try:
+            return cls.objects.get(id=id).project
+        except Exception:
+            return id
+
+
+class ProjectTodoModel(BaseModel):
+    meta = {
+        'collection': 'project_todo',
+        'verbose_name': '专项待办'
+    }
+
+    project = ReferenceField(ProjectStandingBookModel, required=True, verbose_name='项目主体')
+    detail = StringField(required=True, verbose_name='具体事项')
+    time_point = StringField(required=False, verbose_name='时间线', null=True)
+
+    @classmethod
+    def get_name_by_id(cls, id):
+        try:
+            return cls.objects.get(id=id).detail[:10]
+        except Exception:
+            return id
