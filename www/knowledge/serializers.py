@@ -18,8 +18,9 @@
 #  along with Bombus.  If not, see <https://www.gnu.org/licenses/>.
 
 from bombus.libs.baseserializer import BaseDocumentSerializer
+from core.util.time_util import utc2local
 from knowledge.models import (RequireModel, TagModel, TagTypeModel,
-                              TagTypePropertyModel)
+                              TagTypePropertyModel, SupervisionModel, PolicyTraceModel)
 
 
 class TagTypeSerializer(BaseDocumentSerializer):
@@ -52,3 +53,43 @@ class RequireSerializer(BaseDocumentSerializer):
         expand_tags = TagModel.taglist2map(instance.tags)
         result.update(**expand_tags)
         return result
+
+
+class SupervisionSerializer(BaseDocumentSerializer):
+    class Meta:
+        model = SupervisionModel
+        fields = '__all__'
+
+    def time_convert(self, validated_data):
+        if validated_data.get('pub_time'):
+            validated_data['pub_time'] = utc2local(validated_data['pub_time'])
+
+    def create(self, validated_data):
+        self.time_convert(validated_data)
+        instance = super().create(validated_data)
+        return instance
+
+    def update(self, instance, validated_data):
+        self.time_convert(validated_data)
+        super().update(instance, validated_data)
+        return instance
+
+
+class PolicyTraceSerializer(BaseDocumentSerializer):
+    class Meta:
+        model = PolicyTraceModel
+        fields = '__all__'
+
+    def time_convert(self, validated_data):
+        if validated_data.get('pub_time'):
+            validated_data['pub_time'] = utc2local(validated_data['pub_time'])
+
+    def create(self, validated_data):
+        self.time_convert(validated_data)
+        instance = super().create(validated_data)
+        return instance
+
+    def update(self, instance, validated_data):
+        self.time_convert(validated_data)
+        super().update(instance, validated_data)
+        return instance

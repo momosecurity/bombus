@@ -32,12 +32,11 @@ class UserService(object):
 
     @classmethod
     @lru_cache_function(max_size=5000)
-    def _query(self, method, params):
+    def _query(cls, method, params):
         try:
             result = Employee._query(method, params)
         except Exception as e:
             import traceback
-            print(traceback.format_exc())
             result = {}
         return result
 

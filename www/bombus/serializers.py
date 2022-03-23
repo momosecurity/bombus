@@ -23,7 +23,8 @@ from bombus.libs.baseserializer import BaseDocumentSerializer
 from bombus.libs.enums import ProcessStatusEnum
 from bombus.models import (AppComplianceModel, ComplianceDetailModel,
                            FeatureModel, OperationLogModel,
-                           ProjectAuditLogEntry, SettingConfModel)
+                           ProjectAuditLogEntry, SettingConfModel, ProjectTodoModel, ProjectStandingBookModel,
+                           AppTodoModel, AppStandingBookModel)
 from core.utils import utc2local
 
 
@@ -136,3 +137,90 @@ class ComplianceDetailSerializer(BaseDocumentSerializer):
         validated_data['updated_time'] = datetime.datetime.now()
         super().update(instance, validated_data)
         return instance
+
+
+class AppStandingBookSerializer(BaseDocumentSerializer):
+    """
+    app隐私合规
+    """
+    class Meta:
+        model = AppStandingBookModel
+        fields = '__all__'
+
+    def time_convert(self, validated_data):
+        if validated_data.get('occur_time'):
+            validated_data['occur_time'] = utc2local(validated_data['occur_time'])
+
+    def create(self, validated_data):
+        self.time_convert(validated_data)
+        validated_data['created_time'] = datetime.datetime.now()
+        validated_data['updated_time'] = datetime.datetime.now()
+        instance = super().create(validated_data)
+        return instance
+
+    def update(self, instance, validated_data):
+        self.time_convert(validated_data)
+        validated_data['updated_time'] = datetime.datetime.now()
+        super().update(instance, validated_data)
+        return instance
+
+
+class AppTodoSerializer(BaseDocumentSerializer):
+    """
+    评估发现
+    """
+    class Meta:
+        model = AppTodoModel
+        fields = '__all__'
+
+    def create(self, validated_data):
+        validated_data['created_time'] = datetime.datetime.now()
+        validated_data['updated_time'] = datetime.datetime.now()
+        instance = super().create(validated_data)
+        return instance
+
+    def update(self, instance, validated_data):
+        validated_data['updated_time'] = datetime.datetime.now()
+        super().update(instance, validated_data)
+        return instance
+
+
+class ProjectStandingBookSerializer(BaseDocumentSerializer):
+    """
+    专项管理台账
+    """
+    class Meta:
+        model = ProjectStandingBookModel
+        fields = '__all__'
+
+    def create(self, validated_data):
+        validated_data['created_time'] = datetime.datetime.now()
+        validated_data['updated_time'] = datetime.datetime.now()
+        instance = super().create(validated_data)
+        return instance
+
+    def update(self, instance, validated_data):
+        validated_data['updated_time'] = datetime.datetime.now()
+        super().update(instance, validated_data)
+        return instance
+
+
+class ProjectTodoSerializer(BaseDocumentSerializer):
+    """
+    评估发现
+    """
+    class Meta:
+        model = ProjectTodoModel
+        fields = '__all__'
+
+    def create(self, validated_data):
+        validated_data['created_time'] = datetime.datetime.now()
+        validated_data['updated_time'] = datetime.datetime.now()
+        instance = super().create(validated_data)
+        return instance
+
+    def update(self, instance, validated_data):
+        validated_data['updated_time'] = datetime.datetime.now()
+        super().update(instance, validated_data)
+        return instance
+

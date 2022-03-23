@@ -30,6 +30,7 @@ from rest_framework.mixins import (CreateModelMixin, DestroyModelMixin,
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ReadOnlyModelViewSet
 
+from core.util import time_util
 from core.utils import get_email_prefix
 
 
@@ -115,13 +116,20 @@ class GetViewSet(ReadOnlyModelViewSet):
     def build_filter_params(self, params):
         query_params = {}
         for column_name, match_pattern in self.filter_fields.items():
-            query_key = column_name if not match_pattern else '__'.join([column_name, match_pattern])
-            query_value = params.get(column_name)
-            if query_value:
-                if match_pattern == 'in':
-                    if not isinstance(query_value, (tuple, list, set)):
-                        query_value = [query_value]
-                query_params[query_key] = query_value
+            if match_pattern.startswith('time_range'):
+                dt_fmt = match_pattern.split(':', 1)[1]
+                for _key in [f'{column_name}__gt', f'{column_name}__gte', f'{column_name}__lt', f'{column_name}__lte']:
+                    _key_value = params.get(_key) or None
+                    if _key_value:
+                        query_params[_key] = time_util.str2time(_key_value, fmt=dt_fmt)
+            else:
+                query_key = column_name if not match_pattern else '__'.join([column_name, match_pattern])
+                query_value = params.get(column_name)
+                if query_value:
+                    if match_pattern == 'in':
+                        if not isinstance(query_value, (tuple, list, set)):
+                            query_value = [query_value]
+                    query_params[query_key] = query_value
         return query_params
 
     def list(self, request, *args, **kwargs):
