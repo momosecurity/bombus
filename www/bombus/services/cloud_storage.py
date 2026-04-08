@@ -22,9 +22,12 @@
 import datetime
 import os
 import uuid
+from pathlib import Path
 
 from django.conf import settings
 from django.http import StreamingHttpResponse
+
+from bombus.libs.exception import FastResponse
 
 
 class UploadCloudStorage:
@@ -49,10 +52,27 @@ class UploadCloudStorage:
 
 
 class GetCloudStorage:
+    _DOWNLOAD_ERR = '下载失败, 请重试！'
+
     @classmethod
     def get_result(cls, path):
-        file_path = settings.DATA_DIR/path
-        fp = open(file_path, 'rb')
+        if not path or not isinstance(path, str) or '\x00' in path:
+            raise FastResponse(cls._DOWNLOAD_ERR)
+        rel = Path(path)
+        if rel.is_absolute() or rel.name in ('', '.', '..'):
+            raise FastResponse(cls._DOWNLOAD_ERR)
+        try:
+            base = Path(settings.DATA_DIR).resolve()
+            file_path = (base / rel).resolve()
+            file_path.relative_to(base)
+        except (OSError, ValueError):
+            raise FastResponse(cls._DOWNLOAD_ERR) from None
+        if not file_path.is_file():
+            raise FastResponse(cls._DOWNLOAD_ERR)
+        try:
+            fp = open(file_path, 'rb')
+        except OSError:
+            raise FastResponse(cls._DOWNLOAD_ERR) from None
         response = StreamingHttpResponse(fp)
         response['Content-Type'] = 'application/octet-stream'
         return response
